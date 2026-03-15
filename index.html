@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Gerakan Kapal & Pembayaran</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background">
+      <div class="background__grid"></div>
+      <div class="background__glow"></div>
+      <div class="background__waves"></div>
+    </div>
+    <svg class="icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="icon-ship" viewBox="0 0 64 64">
+        <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="14" y="24" width="36" height="18" rx="2"></rect>
+          <path d="M9 42h46l-6 8H15z"></path>
+          <path d="M20 24v-8h8v8"></path>
+          <path d="M32 24v-8h8v8"></path>
+          <path d="M22 31h4M30 31h4M38 31h4"></path>
+        </g>
+      </symbol>
+      <symbol id="icon-rupiah" viewBox="0 0 64 64">
+        <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="16" width="48" height="32" rx="4"></rect>
+          <circle cx="32" cy="32" r="8"></circle>
+          <circle cx="16" cy="24" r="2" fill="currentColor" stroke="none"></circle>
+          <circle cx="48" cy="40" r="2" fill="currentColor" stroke="none"></circle>
+        </g>
+      </symbol>
+      <symbol id="icon-dollar" viewBox="0 0 64 64">
+        <text x="32" y="45" text-anchor="middle" font-size="44" font-weight="700" fill="currentColor">$</text>
+      </symbol>
+    </svg>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand__topline">
+          <img class="brand__logo" src="assets/PCM-logo.png" alt="Logo PCM" />
+          <span class="badge">Dashboard</span>
+        </div>
+      </div>
+      <div class="realtime-panel">
+        <strong id="realtimeDateLabel" class="realtime-panel__date">-</strong>
+      </div>
+    </header>
+
+    <main>
+      <section class="kpi-periods">
+        <div class="movement-grid">
+          <article class="card movement-card movement-card--today">
+            <p class="movement-card__label">Gerakan Hari Ini</p>
+            <h2 id="kpiDayTotal" class="movement-card__value">0</h2>
+            <dl class="movement-card__stats">
+              <div>
+                <dt>Utara</dt>
+                <dd id="kpiDayTotalUtara">0</dd>
+              </div>
+              <div>
+                <dt>Selatan</dt>
+                <dd id="kpiDayTotalSelatan">0</dd>
+              </div>
+              <div>
+                <dt>Domestik</dt>
+                <dd id="kpiDayDomesticInline">0</dd>
+              </div>
+              <div>
+                <dt>Asing</dt>
+                <dd id="kpiDayForeignInline">0</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="card movement-card movement-card--monthly">
+            <p id="kpiMonthLabel" class="movement-card__label">Gerakan Bulan</p>
+            <h2 id="kpiMonthTotal" class="movement-card__value">0</h2>
+            <dl class="movement-card__stats">
+              <div>
+                <dt>Utara</dt>
+                <dd id="kpiMonthTotalUtara">0</dd>
+              </div>
+              <div>
+                <dt>Selatan</dt>
+                <dd id="kpiMonthTotalSelatan">0</dd>
+              </div>
+              <div>
+                <dt>Domestik</dt>
+                <dd id="kpiMonthDomesticInline">0</dd>
+              </div>
+              <div>
+                <dt>Asing</dt>
+                <dd id="kpiMonthForeignInline">0</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="card movement-card movement-card--yearly">
+            <p id="kpiYearLabel" class="movement-card__label">Gerakan Tahun</p>
+            <h2 id="kpiYearTotal" class="movement-card__value">0</h2>
+            <dl class="movement-card__stats">
+              <div>
+                <dt>Utara</dt>
+                <dd id="kpiYearTotalUtara">0</dd>
+              </div>
+              <div>
+                <dt>Selatan</dt>
+                <dd id="kpiYearTotalSelatan">0</dd>
+              </div>
+              <div>
+                <dt>Domestik</dt>
+                <dd id="kpiYearDomesticInline">0</dd>
+              </div>
+              <div>
+                <dt>Asing</dt>
+                <dd id="kpiYearForeignInline">0</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="card movement-card movement-card--average">
+            <p class="movement-card__label">Rata-Rata Gerakan</p>
+            <div class="movement-card__metric">
+              <h2 id="kpiAverageTotal" class="movement-card__value">0</h2>
+              <p class="movement-card__hint">Rata-rata per hari pada bulan berjalan</p>
+            </div>
+            <div class="movement-card__metric movement-card__metric--secondary">
+              <h2 id="kpiAverageYearTotal" class="movement-card__value movement-card__value--secondary">0</h2>
+              <p class="movement-card__hint">Rata-rata per bulan pada tahun berjalan</p>
+            </div>
+          </article>
+
+          <article class="card movement-card movement-card--invoice">
+            <p class="movement-card__label">Total Invoice Terbit</p>
+            <h2 id="invoiceTotalValue" class="movement-card__value">0</h2>
+            <dl id="invoiceTotalsStats" class="movement-card__stats"></dl>
+          </article>
+        </div>
+      </section>
+
+      <section class="charts">
+        <article class="card chart-card chart-card--wide chart-card--orange">
+          <header class="card-head">
+            <div>
+              <h3>Tabel Gerakan Kapal Bulanan</h3>
+            </div>
+            <div class="card-head__controls">
+              <label class="filter filter--compact">
+                <span>Periode Bulan</span>
+                <select id="monthSelect"></select>
+              </label>
+            </div>
+          </header>
+          <div id="monthlyRecapTable" class="monthly-recap"></div>
+        </article>
+
+        <article class="card chart-card chart-card--wide chart-card--orange">
+          <header class="card-head">
+            <div>
+              <h3>Grafik Gerakan Kapal Bulanan</h3>
+            </div>
+          </header>
+          <div class="chart chart--scroll-x">
+            <div class="chart__inner chart__inner--wide">
+              <canvas id="chartTotal"></canvas>
+            </div>
+          </div>
+        </article>
+
+        <article class="card chart-card chart-card--wide chart-card--orange">
+          <header class="card-head">
+            <div>
+              <h3>Grafik Gerakan Kapal Tahunan</h3>
+            </div>
+          </header>
+          <div class="chart chart--scroll-x">
+            <div class="chart__inner chart__inner--wide">
+              <canvas id="chartTotalYearly"></canvas>
+            </div>
+          </div>
+        </article>
+
+        <article class="card chart-card chart-card--wide chart-card--orange">
+          <header class="card-head">
+            <div>
+              <h3>Grafik Total Invoice Bulanan</h3>
+            </div>
+          </header>
+          <div class="chart chart--scroll-x">
+            <div class="chart__inner chart__inner--wide">
+              <canvas id="chartInvoiceMonthly"></canvas>
+            </div>
+          </div>
+        </article>
+
+        <article class="card chart-card chart-card--wide" hidden>
+          <header class="card-head">
+            <div>
+              <h3>Rekap Harian Gerakan per Kantor</h3>
+              <p>Stacked bar untuk melihat total dan kontribusi harian</p>
+            </div>
+          </header>
+          <div class="chart chart--tall">
+            <canvas id="chartDailyStacked"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <section class="excel-recap-section">
+        <article class="card chart-card chart-card--wide chart-card--orange">
+          <header class="card-head">
+            <div>
+              <h3>Tabel Lampiran Bulanan</h3>
+            </div>
+          </header>
+          <div id="externalRecapTables" class="external-recap"></div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footnote">
+      Data di halaman ini dapat berasal dari API atau data dummy fallback untuk simulasi.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      window.APP_CONFIG = Object.assign(
+        {
+          dashboardApiUrl: "",
+          dashboardApiToken: "",
+          externalRecapApiUrl: "",
+          externalRecapApiToken: "",
+        },
+        window.APP_CONFIG || {}
+      );
+    </script>
+    <script src="excel-table-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
